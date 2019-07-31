@@ -13,7 +13,5 @@ import java.util.List;
  */
 @Component
 public interface BookRepository extends ElasticsearchRepository<Book,Integer> {
-    List<Book> findByBooknameLike(String bookname);
-
     List<Book> findAllByBookname(String bookname);
 }

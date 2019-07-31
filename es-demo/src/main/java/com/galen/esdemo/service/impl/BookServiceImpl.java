@@ -33,12 +33,14 @@ public class BookServiceImpl implements BookService {
     @Override
     public boolean insert(Book book) {
         boolean falg=false;
+
         try{
             bookRepository.save(book);
             falg=true;
         }catch(Exception e){
             e.printStackTrace();
         }
+
         return falg;
     }
 
@@ -46,15 +48,12 @@ public class BookServiceImpl implements BookService {
     public List<Book> search(String searchContent) {
         QueryStringQueryBuilder builder = new QueryStringQueryBuilder(searchContent);
         System.out.println("查询的语句:"+builder);
-        Iterable<Book> searchResult = bookRepository.search(builder);
-//        Iterator<Book> iterator = searchResult.iterator();
-        List<Book> list=new ArrayList<Book>();
 
+        Iterable<Book> searchResult = bookRepository.search(builder);
+
+        List<Book> list=new ArrayList<Book>();
         searchResult.forEach(result -> list.add(result));
 
-//        while (iterator.hasNext()) {
-//            list.add(iterator.next());
-//        }
         return list;
     }
 
@@ -62,10 +61,14 @@ public class BookServiceImpl implements BookService {
     public List<Book> searchBook(Integer pageNumber, Integer pageSize, String searchContent) {
         // 分页参数
         Pageable pageable = new PageRequest(pageNumber, pageSize);
+
         QueryStringQueryBuilder builder = new QueryStringQueryBuilder(searchContent);
+
         SearchQuery searchQuery = new NativeSearchQueryBuilder().withPageable(pageable).withQuery(builder).build();
         System.out.println("查询的语句:" + searchQuery.getQuery().toString());
+
         Page<Book> searchPageResults = bookRepository.search(searchQuery);
+
         return searchPageResults.getContent();
     }
 
@@ -102,10 +105,6 @@ public class BookServiceImpl implements BookService {
 
         Iterator<Book> iterator = books.iterator();
         List<Book> list = IteratorUtils.toList(iterator);
-//        List<Book> list = new ArrayList<>();
-//        while (iterator.hasNext()){
-//            list.add(iterator.next());
-//        }
 
         return list;
     }

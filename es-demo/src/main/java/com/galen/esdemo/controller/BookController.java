@@ -20,6 +20,12 @@ public class BookController {
     @Autowired
     private BookService bookService;
 
+    /**
+     * 新增
+     * @param book
+     * @return
+     * @throws Exception
+     */
     @RequestMapping("/add")
     public String esSave(@RequestBody Book book) throws Exception {
         log.info("save"+book.toString());
@@ -32,6 +38,12 @@ public class BookController {
         }
     }
 
+    /**
+     * 查询
+     * @param queryContent
+     * @return
+     * @throws Exception
+     */
     @RequestMapping("/query")
     public List<Book> esSearch(@RequestParam(value = "queryContent", required = false) String queryContent) throws Exception{
         log.info("query："+queryContent);
@@ -42,6 +54,14 @@ public class BookController {
         return bookList;
     }
 
+    /**
+     * 分页查询
+     * @param pageNumber
+     * @param pageSize
+     * @param queryContent
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "/query/page",method = RequestMethod.GET)
     public List<Book> esSearchPage(@RequestParam(value = "pageNumber") Integer pageNumber,
                                    @RequestParam(value = "pageSize") Integer pageSize,
@@ -54,6 +74,13 @@ public class BookController {
         return bookList;
     }
 
+    /**
+     * 分页查询
+     * @param pageNumber
+     * @param pageSize
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "/query/searchBookByPage",method = RequestMethod.GET)
     public List<Book> searchBookByPage(@RequestParam(value = "pageNumber") Integer pageNumber,
                                    @RequestParam(value = "pageSize") Integer pageSize) throws Exception{
@@ -64,6 +91,12 @@ public class BookController {
         return books;
     }
 
+    /**
+     * 修改
+     * @param book
+     * @return
+     * @throws Exception
+     */
     @RequestMapping("/update")
     public String esUpdate(@RequestBody Book book) throws Exception {
         log.info("update"+book.toString());
@@ -76,6 +109,12 @@ public class BookController {
         }
     }
 
+    /**
+     * 删除
+     * @param id
+     * @return
+     * @throws Exception
+     */
     @RequestMapping("/delete")
     public String esDelete(@RequestParam(value = "id", required = true) Integer id) throws Exception {
         Book book = new Book();

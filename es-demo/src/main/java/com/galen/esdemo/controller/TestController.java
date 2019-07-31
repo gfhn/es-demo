@@ -46,28 +46,19 @@ public class TestController {
         }
         List<Book> list = bookRepository.findAllByBookname(bookName);
 
-        System.out.println(list);
-
         if (list == null) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity(list, HttpStatus.OK);
     }
 
-    /**
-     *
-     * @return
-     */
+
     @GetMapping("/get/book/list")
     public ResponseEntity getBookList(){
         Iterable<Book> books = bookRepository.findAll();
-        Iterator<Book> iterator = books.iterator();
-        List<Book> list = new ArrayList<>();
-        while (iterator.hasNext()){
-            list.add(iterator.next());
-        }
 
-        System.out.println(list);
+        List<Book> list = new ArrayList<>();
+        books.forEach(result -> list.add(result));
 
         if (list == null) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
